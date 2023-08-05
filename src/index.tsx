@@ -1,8 +1,9 @@
 import { Text, View } from 'react-native'
+import { styles } from './styles'
 
 const App = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>hola!!</Text>
     </View>
   )
