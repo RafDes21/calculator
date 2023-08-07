@@ -3,61 +3,73 @@ import { View, Text, TouchableHighlight } from "react-native";
 import { styles } from "./styles";
 
 const App = () => {
-  const [data, setData] = useState<string[]>(["0"]);
-  // const [resultShown, setResultShown] = useState<boolean>(false);
+  const [currentCalculation, setCurrentCalculation] = useState<string>("0");
 
   const handlePress = (value: string) => {
-
-    if (data[0] === "0") {
-      setData([value])
+    if (currentCalculation === "0" || currentCalculation === "Error") {
+      setCurrentCalculation(value);
     } else {
-      setData([...data, value]);
+      setCurrentCalculation(prevCalculation => prevCalculation + value);
     }
   };
 
   const calculateTotal = () => {
     try {
-      let result = 0;
-      let currentOperator = "+";
-
-      data.forEach((item) => {
-        if (["+", "-", "x", "/"].includes(item)) {
-          currentOperator = item;
-        } else {
-          switch (currentOperator) {
-            case "+":
-              result += parseFloat(item);
-              break;
-            case "-":
-              result -= parseFloat(item);
-              break;
-            case "x":
-              result *= parseFloat(item);
-              break;
-            case "/":
-              result /= parseFloat(item);
-              break;
-            default:
-              break;
-          }
-        }
-      });
-
-      setData([result.toString()]);
-      // setResultShown(true);
+      const total = evaluateExpression(currentCalculation);
+      setCurrentCalculation(total.toString());
     } catch (error) {
-      setData(["Error"]);
+      setCurrentCalculation("Error");
     }
   };
 
   const onPressClear = () => {
-    setData(["0"]);
+    setCurrentCalculation("0");
+  };
+
+  const evaluateExpression = (exp: string): number => {
+    // Implement your own logic to evaluate the expression here
+    // For simplicity, let's split the expression into operands and operators
+    const operands = exp.split(/[+\-x/]/);
+    const operators = exp.match(/[+\-x/]/g);
+    console.log(operands);
+    
+  
+    if (!operators) {
+      // No operators found, return the single operand as the result
+      return parseFloat(operands[0]);
+    }
+  
+    let result = parseFloat(operands[0]);
+  
+    for (let i = 0; i < operators.length; i++) {
+      const operator = operators[i];
+      const operand = parseFloat(operands[i + 1]);
+  
+      switch (operator) {
+        case "+":
+          result += operand;
+          break;
+        case "-":
+          result -= operand;
+          break;
+        case "x":
+          result *= operand;
+          break;
+        case "/":
+          result /= operand;
+          break;
+        default:
+          break;
+      }
+    }
+  
+    return result;
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>{data}</Text>
+        <Text style={styles.totalText}>{currentCalculation}</Text>
       </View>
       <View style={styles.btns}>
         <View>
