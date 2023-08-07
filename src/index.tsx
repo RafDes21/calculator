@@ -27,45 +27,48 @@ const App = () => {
   };
 
   const evaluateExpression = (exp: string): number => {
-    // Implement your own logic to evaluate the expression here
-    // For simplicity, let's split the expression into operands and operators
-    const operands = exp.split(/[+\-x/]/);
-    const operators = exp.match(/[+\-x/]/g);
-    console.log(operands);
-    
+    const tokens = exp.split(/([+\-x/])/).filter(token => token.trim() !== '');
   
-    if (!operators) {
-      // No operators found, return the single operand as the result
-      return parseFloat(operands[0]);
+    if (tokens.length === 0) {
+      return 0;
     }
   
-    let result = parseFloat(operands[0]);
+    let operands: number[] = [];
+    let operators: string[] = [];
+    let currentNumber = parseFloat(tokens[0]);
+  
+    for (let i = 1; i < tokens.length; i += 2) {
+      const operator = tokens[i];
+      const nextNumber = parseFloat(tokens[i + 1]);
+  
+      if (operator === "x" || operator === "/") {
+        if (operator === "x") {
+          currentNumber *= nextNumber;
+        } else {
+          currentNumber /= nextNumber;
+        }
+      } else {
+        operands.push(currentNumber);
+        operators.push(operator);
+        currentNumber = nextNumber;
+      }
+    }
+  
+    operands.push(currentNumber);
+  
+    let result = operands[0];
   
     for (let i = 0; i < operators.length; i++) {
-      const operator = operators[i];
-      const operand = parseFloat(operands[i + 1]);
-  
-      switch (operator) {
-        case "+":
-          result += operand;
-          break;
-        case "-":
-          result -= operand;
-          break;
-        case "x":
-          result *= operand;
-          break;
-        case "/":
-          result /= operand;
-          break;
-        default:
-          break;
+      if (operators[i] === "+") {
+        result += operands[i + 1];
+      } else {
+        result -= operands[i + 1];
       }
     }
   
     return result;
   };
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.totalContainer}>
