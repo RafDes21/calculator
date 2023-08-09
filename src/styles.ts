@@ -1,20 +1,23 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet} from "react-native";
 import { COLOR } from "./themes/colors";
+import Constants from 'expo-constants';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF",
+    backgroundColor: COLOR.neutro,
     padding: 20,
+    marginTop: Constants.statusBarHeight
   },
   totalContainer: {
     marginBottom: 10,
     width: "100%",
     height:150,
-    borderWidth:1,
+    borderWidth:2,
     borderColor: COLOR.secondary,
+    backgroundColor: COLOR.primary,
     borderRadius:5,
     alignItems:"flex-end",
     justifyContent:"flex-end",
@@ -23,6 +26,8 @@ export const styles = StyleSheet.create({
   totalText: {
     fontSize: 24,
     fontWeight: "bold",
+    color:COLOR.neutro
+    
   },
   btns: {
     width: "100%",
