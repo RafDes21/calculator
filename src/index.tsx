@@ -11,7 +11,7 @@ const {currentCalculation, onPressClear,handlePress, calculateTotal} = useCalcul
         <Text style={styles.totalText}>{currentCalculation}</Text>
       </View>
       <View style={styles.btns}>
-        <View>
+        <View style={styles.btnsNumbers}>
           <View style={styles.row}>
             <TouchableHighlight
               underlayColor="#DDDDDD"

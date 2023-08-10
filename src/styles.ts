@@ -1,6 +1,6 @@
-import { StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 import { COLOR } from "./themes/colors";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,33 +9,31 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: COLOR.neutro,
     padding: 20,
-    marginTop: Constants.statusBarHeight
+    marginTop: Constants.statusBarHeight,
   },
   totalContainer: {
     marginBottom: 10,
     width: "100%",
-    height:150,
-    borderWidth:2,
+    height: 150,
+
     borderColor: COLOR.secondary,
     backgroundColor: COLOR.primary,
-    borderRadius:5,
-    alignItems:"flex-end",
-    justifyContent:"flex-end",
+    borderRadius: 5,
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
     padding: 10,
   },
   totalText: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "bold",
-    color:COLOR.neutro
-    
+    color: COLOR.neutro,
   },
   btns: {
     width: "100%",
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: COLOR.neutro,
-    padding:10,
-    borderRadius:8,
+    borderRadius: 8,
   },
   row: {
     flexDirection: "row",
@@ -45,15 +43,15 @@ export const styles = StyleSheet.create({
     backgroundColor: COLOR.primary,
     alignItems: "center",
     justifyContent: "center",
-    width: 60,
-    height: 60,
+    width: 63,
+    height: 63,
     borderRadius: 30,
-    marginVertical:10,
+    marginVertical: 10,
     marginHorizontal: 15,
   },
-  btnText:{
+  btnText: {
     color: COLOR.neutro,
-    fontSize:20,
+    fontSize: 20,
   },
   operatorBtn: {
     backgroundColor: COLOR.secondary,
@@ -62,14 +60,18 @@ export const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    margin:10,
+    margin: 10,
   },
-  operatorsRow:{
-  
+  operatorsRow: {
+    backgroundColor: COLOR.primary,
+    borderRadius:5
   },
-  operatorBtnText:{
-    fontSize:30,
+  operatorBtnText: {
+    fontSize: 30,
     color: COLOR.operator,
-  }
-
+  },
+  btnsNumbers: {
+    backgroundColor: COLOR.secondary,
+    borderRadius: 5,
+  },
 });
