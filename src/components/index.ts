@@ -1,1 +1,2 @@
-export {default as ContentButton} from "./content-button"
+export {default as CalcButton} from "./calcButton"
+export {default as OperatorButton} from "./operatorButton"

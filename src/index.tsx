@@ -1,155 +1,51 @@
-import { View, Text, TouchableHighlight } from "react-native";
+import { View, Text, TouchableHighlight, ScrollView } from "react-native";
 import { styles } from "./styles";
 import { useCalculator } from "./hook/useCalculator";
+import { CalcButton, OperatorButton } from "./components";
 
 const App = () => {
-const {currentCalculation, onPressClear,handlePress, calculateTotal} = useCalculator()
-  
+  const { currentCalculation, onPressClear, handlePress, calculateTotal } =
+    useCalculator();
+
   return (
     <View style={styles.container}>
       <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>{currentCalculation}</Text>
+        <ScrollView>
+          <Text style={styles.totalText}>{currentCalculation}</Text>
+        </ScrollView>
       </View>
       <View style={styles.btns}>
         <View style={styles.btnsNumbers}>
           <View style={styles.row}>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => onPressClear()}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>AC</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("%")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>%</Text>
-            </TouchableHighlight>
+            <CalcButton label={"AC"} onPress={onPressClear} />
+            <CalcButton label={"%"} onPress={handlePress} />
           </View>
           <View style={styles.row}>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("9")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>9</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("8")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>8</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("7")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>7</Text>
-            </TouchableHighlight>
+            <CalcButton label={"9"} onPress={handlePress} />
+            <CalcButton label={"8"} onPress={handlePress} />
+            <CalcButton label={"7"} onPress={handlePress} />
           </View>
           <View style={styles.row}>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("6")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>6</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("5")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>5</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("4")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>4</Text>
-            </TouchableHighlight>
+            <CalcButton label={"6"} onPress={handlePress} />
+            <CalcButton label={"5"} onPress={handlePress} />
+            <CalcButton label={"4"} onPress={handlePress} />
           </View>
           <View style={styles.row}>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("3")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>3</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("2")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>2</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("1")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>1</Text>
-            </TouchableHighlight>
+            <CalcButton label={"3"} onPress={handlePress} />
+            <CalcButton label={"2"} onPress={handlePress} />
+            <CalcButton label={"1"} onPress={handlePress} />
           </View>
           <View style={styles.row}>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress("0")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>0</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor="#DDDDDD"
-              onPress={() => handlePress(".")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>.</Text>
-            </TouchableHighlight>
+            <CalcButton label={"0"} onPress={handlePress} />
+            <CalcButton label={"."} onPress={handlePress} />
           </View>
         </View>
         <View style={styles.operatorsRow}>
-          <TouchableHighlight
-            underlayColor="#DDDDDD"
-            onPress={() => handlePress("+")}
-            style={styles.operatorBtn}
-          >
-            <Text style={styles.operatorBtnText}>+</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor="#DDDDDD"
-            onPress={() => handlePress("-")}
-            style={styles.operatorBtn}
-          >
-            <Text style={styles.operatorBtnText}>-</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor="#DDDDDD"
-            onPress={() => handlePress("x")}
-            style={styles.operatorBtn}
-          >
-            <Text style={styles.operatorBtnText}>x</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor="#DDDDDD"
-            onPress={() => handlePress("/")}
-            style={styles.operatorBtn}
-          >
-            <Text style={styles.operatorBtnText}>/</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor="#DDDDDD"
-            onPress={() => calculateTotal()}
-            style={styles.operatorBtn}
-          >
-            <Text style={styles.operatorBtnText}>=</Text>
-          </TouchableHighlight>
+          <OperatorButton label="+" onPress={() => handlePress("+")} />
+          <OperatorButton label="-" onPress={() => handlePress("-")} />
+          <OperatorButton label="x" onPress={() => handlePress("x")} />
+          <OperatorButton label="/" onPress={() => handlePress("/")} />
+          <OperatorButton label="=" onPress={() => calculateTotal()} />
         </View>
       </View>
     </View>
