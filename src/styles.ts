@@ -15,18 +15,12 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     width: "100%",
     height: 150,
-
     borderColor: COLOR.secondary,
-    backgroundColor: COLOR.primary,
+    backgroundColor: COLOR.display,
     borderRadius: 5,
     alignItems: "flex-end",
     justifyContent: "flex-end",
     padding: 10,
-  },
-  totalText: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: COLOR.neutro,
   },
   btns: {
     width: "100%",
@@ -64,7 +58,7 @@ export const styles = StyleSheet.create({
   },
   operatorsRow: {
     backgroundColor: COLOR.primary,
-    borderRadius:5
+    borderRadius: 5,
   },
   operatorBtnText: {
     fontSize: 30,

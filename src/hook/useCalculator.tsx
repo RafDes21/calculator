@@ -3,7 +3,7 @@ import { evaluateExpression } from "../utils/mathUtils";
 
 export const useCalculator = () => {
   const [currentCalculation, setCurrentCalculation] = useState<string>("0");
-
+  
   const handlePress = (value: string) => {
     if (currentCalculation === "0" || currentCalculation === "Error") {
       setCurrentCalculation(value);

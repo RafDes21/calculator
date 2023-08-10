@@ -1,7 +1,7 @@
 import { View, Text, TouchableHighlight, ScrollView } from "react-native";
 import { styles } from "./styles";
 import { useCalculator } from "./hook/useCalculator";
-import { CalcButton, OperatorButton } from "./components";
+import { CalcButton, CalculatorDisplay, OperatorButton } from "./components";
 
 const App = () => {
   const { currentCalculation, onPressClear, handlePress, calculateTotal } =
@@ -11,7 +11,7 @@ const App = () => {
     <View style={styles.container}>
       <View style={styles.totalContainer}>
         <ScrollView>
-          <Text style={styles.totalText}>{currentCalculation}</Text>
+          <CalculatorDisplay expression={currentCalculation} />
         </ScrollView>
       </View>
       <View style={styles.btns}>
