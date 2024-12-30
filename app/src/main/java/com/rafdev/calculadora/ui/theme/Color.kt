@@ -6,6 +6,8 @@ object CalculatorPalette {
     val darkBlue = Color(0xFF0F1926)
     val lightBlue = Color(0xFF2E4159)
     val golden = Color(0xFFFF8E26)
+    val lightBlack = Color(0x17000000)
+    val lightSkyBlue = Color(0xFF9BA7BF)
 }
 
 val Purple80 = Color(0xFFD0BCFF)
