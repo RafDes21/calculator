@@ -54,6 +54,7 @@ dependencies {
 
     val nav_version = "2.8.4"
 
+    implementation ("net.objecthunter:exp4j:0.4.8")
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
