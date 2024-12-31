@@ -2,12 +2,15 @@ package com.rafdev.calculadora.domain.buttonData
 
 import com.rafdev.calculadora.domain.model.ButtonModel
 import com.rafdev.calculadora.ui.theme.CalculatorPalette
+import com.rafdev.calculadora.util.CalculatorAction.ALL_CLEAR
+import com.rafdev.calculadora.util.CalculatorAction.BACKSPACE
+import com.rafdev.calculadora.util.CalculatorAction.EQUALS
 
 object ButtonData {
 
     val buttonRows: List<List<ButtonModel>> = listOf(
         listOf(
-            ButtonModel("AC", CalculatorPalette.golden),
+            ButtonModel(ALL_CLEAR, CalculatorPalette.golden),
             ButtonModel("()", CalculatorPalette.golden),
             ButtonModel("%", CalculatorPalette.golden),
             ButtonModel("/", CalculatorPalette.golden)
@@ -33,7 +36,8 @@ object ButtonData {
         listOf(
             ButtonModel("0", CalculatorPalette.lightSkyBlue),
             ButtonModel(".", CalculatorPalette.lightSkyBlue),
-            ButtonModel("=", CalculatorPalette.lightSkyBlue)
+            ButtonModel(BACKSPACE, CalculatorPalette.lightSkyBlue),
+            ButtonModel(EQUALS, CalculatorPalette.white)
         )
     )
 }
