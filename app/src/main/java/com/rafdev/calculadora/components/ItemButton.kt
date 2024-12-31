@@ -1,6 +1,7 @@
 package com.rafdev.calculadora.components
 
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,7 +33,8 @@ fun ItemButton(
     modifier: Modifier = Modifier,
     symbol: String,
     symColor: Color,
-    onClick: () -> Unit
+    iconResourceId: Int? = null,
+    onClick: () -> Unit,
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -41,12 +44,20 @@ fun ItemButton(
             .clickable { onClick() }
             .then(modifier)
     ) {
-        Text(
-            text = symbol,
-            fontSize = 35.sp,
-            color = symColor,
-            modifier = Modifier.align(Alignment.Center)
-        )
+        iconResourceId?.let {
+            Image(
+                painter = painterResource(id = it),
+                contentDescription = "delete number",
+                modifier = Modifier.size(40.dp)
+            )
+        } ?: run {
+            Text(
+                text = symbol,
+                fontSize = 35.sp,
+                color = symColor,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
     }
 }
 
