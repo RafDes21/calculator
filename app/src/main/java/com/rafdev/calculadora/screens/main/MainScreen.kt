@@ -1,6 +1,5 @@
 package com.rafdev.calculadora.screens.main
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,15 +10,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,12 +30,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextDirection
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rafdev.calculadora.R
@@ -128,15 +118,57 @@ fun MainScreen(modifier: Modifier = Modifier) {
                             }
                         }
 
+                        EQUALS -> {
+                            try {
+                                val expressionString = expression.text.trim()
+                                if (expressionString.isNotEmpty()) {
+                                    val expr = net.objecthunter.exp4j.ExpressionBuilder(expressionString).build()
+                                    val calculatedResult = expr.evaluate()
+                                    result = calculatedResult.toString()
+                                }
+                            } catch (e: IllegalArgumentException) {
+                                result = "Error de sintaxis"
+                            } catch (e: ArithmeticException) {
+                                result = "Error aritmético"
+                            } catch (e: Exception) {
+                                result = "Error desconocido"
+                            }
+                        }
+
                         else -> {
-                            val newText = expression.text.substring(
-                                0,
+                            val textBeforeCursor = expression.text.substring(0, cursorPosition).trimEnd()
+                            val lastChar = textBeforeCursor.lastOrNull()
+
+                            val newText = buildString {
+                                append(expression.text.substring(0, cursorPosition))
+
+                                if (lastChar in listOf('+', '-', '*', '/') && symbol in listOf("+", "-", "*", "/")) {
+                                    delete(length - 1, length)
+                                }
+
+                                append(symbol)
+                                append(expression.text.substring(cursorPosition))
+                            }
+
+                            val newCursorPosition = if (lastChar in listOf('+', '-', '*', '/') && symbol in listOf("+", "-", "*", "/")) {
                                 cursorPosition
-                            ) + symbol + expression.text.substring(cursorPosition)
+                            } else {
+                                cursorPosition + symbol.length
+                            }
+
                             expression = TextFieldValue(
                                 newText,
-                                TextRange(cursorPosition + symbol.length)
+                                TextRange(newCursorPosition)
                             )
+
+//                            val newText = expression.text.substring(
+//                                0,
+//                                cursorPosition
+//                            ) + symbol + expression.text.substring(cursorPosition)
+//                            expression = TextFieldValue(
+//                                newText,
+//                                TextRange(cursorPosition + symbol.length)
+//                            )
                         }
                     }
                 })
@@ -199,8 +231,8 @@ fun ButtonRow(
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun MainScreenPreview(modifier: Modifier = Modifier) {
-    MainScreen()
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun MainScreenPreview(modifier: Modifier = Modifier) {
+//    MainScreen()
+//}
