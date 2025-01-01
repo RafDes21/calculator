@@ -195,14 +195,6 @@ fun MainScreen(
                                 TextRange(newCursorPosition)
                             )
 
-//                            val newText = expression.text.substring(
-//                                0,
-//                                cursorPosition
-//                            ) + symbol + expression.text.substring(cursorPosition)
-//                            expression = TextFieldValue(
-//                                newText,
-//                                TextRange(cursorPosition + symbol.length)
-//                            )
                         }
                     }
                 })
