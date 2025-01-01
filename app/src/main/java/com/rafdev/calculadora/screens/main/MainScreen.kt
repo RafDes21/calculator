@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,9 +29,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rafdev.calculadora.R
@@ -87,16 +92,27 @@ fun MainScreen(modifier: Modifier = Modifier) {
                         }
                     },
                 textStyle = TextStyle(
-                    fontSize = 50.sp,
-                    color = Color.White
+                    fontSize = 55.sp,
+                    color = CalculatorPalette.white
                 ),
                 cursorBrush = SolidColor(Color.White),
                 singleLine = true,
-
                 )
 
-            result?.let {
-                Text(text = it)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                result?.let {
+                    Text(
+                        text = it,
+                        fontSize = 50.sp,
+                        color = CalculatorPalette.lightSkyBlue,
+                        modifier = Modifier
+                    )
+                }
             }
 
             rows.forEach { row ->
@@ -104,6 +120,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                     val cursorPosition = expression.selection.end
                     when (symbol) {
                         ALL_CLEAR -> {
+                            result = null
                             expression = TextFieldValue(" ", TextRange.Zero)
                         }
 
@@ -122,7 +139,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
                             try {
                                 val expressionString = expression.text.trim()
                                 if (expressionString.isNotEmpty()) {
-                                    val expr = net.objecthunter.exp4j.ExpressionBuilder(expressionString).build()
+                                    val expr =
+                                        net.objecthunter.exp4j.ExpressionBuilder(expressionString)
+                                            .build()
                                     val calculatedResult = expr.evaluate()
                                     result = calculatedResult.toString()
                                 }
@@ -136,13 +155,21 @@ fun MainScreen(modifier: Modifier = Modifier) {
                         }
 
                         else -> {
-                            val textBeforeCursor = expression.text.substring(0, cursorPosition).trimEnd()
+                            val textBeforeCursor =
+                                expression.text.substring(0, cursorPosition).trimEnd()
                             val lastChar = textBeforeCursor.lastOrNull()
 
                             val newText = buildString {
                                 append(expression.text.substring(0, cursorPosition))
 
-                                if (lastChar in listOf('+', '-', '*', '/') && symbol in listOf("+", "-", "*", "/")) {
+                                if (lastChar in listOf('+', '-', '*', '/', '%') && symbol in listOf(
+                                        "+",
+                                        "-",
+                                        "*",
+                                        "/",
+                                        "%"
+                                    )
+                                ) {
                                     delete(length - 1, length)
                                 }
 
@@ -150,11 +177,19 @@ fun MainScreen(modifier: Modifier = Modifier) {
                                 append(expression.text.substring(cursorPosition))
                             }
 
-                            val newCursorPosition = if (lastChar in listOf('+', '-', '*', '/') && symbol in listOf("+", "-", "*", "/")) {
-                                cursorPosition
-                            } else {
-                                cursorPosition + symbol.length
-                            }
+                            val newCursorPosition =
+                                if (lastChar in listOf('+', '-', '*', '/', '%') && symbol in listOf(
+                                        "+",
+                                        "-",
+                                        "*",
+                                        "/",
+                                        "%"
+                                    )
+                                ) {
+                                    cursorPosition
+                                } else {
+                                    cursorPosition + symbol.length
+                                }
 
                             expression = TextFieldValue(
                                 newText,
@@ -231,8 +266,8 @@ fun ButtonRow(
     }
 }
 
-//@Preview(showSystemUi = true)
-//@Composable
-//fun MainScreenPreview(modifier: Modifier = Modifier) {
-//    MainScreen()
-//}
+@Preview(showSystemUi = true)
+@Composable
+fun MainScreenPreview(modifier: Modifier = Modifier) {
+    MainScreen()
+}
