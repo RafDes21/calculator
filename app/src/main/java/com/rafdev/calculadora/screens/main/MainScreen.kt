@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.text.BasicText
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,18 +29,14 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rafdev.calculadora.R
 import com.rafdev.calculadora.components.ItemButton
-import com.rafdev.calculadora.domain.buttonData.ButtonData
 import com.rafdev.calculadora.domain.model.ButtonModel
 import com.rafdev.calculadora.ui.theme.CalculatorPalette
 import com.rafdev.calculadora.util.CalculatorAction.ALL_CLEAR
@@ -48,9 +44,12 @@ import com.rafdev.calculadora.util.CalculatorAction.BACKSPACE
 import com.rafdev.calculadora.util.CalculatorAction.EQUALS
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel = hiltViewModel(),
+) {
 
-    val rows = ButtonData.buttonRows
+    val rows = viewModel.uiButtonState.data
     var expression by remember { mutableStateOf(TextFieldValue(" ")) }
     var result by remember { mutableStateOf<String?>(null) }
 
@@ -97,7 +96,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 ),
                 cursorBrush = SolidColor(Color.White),
                 singleLine = true,
-                )
+            )
 
             Box(
                 modifier = Modifier

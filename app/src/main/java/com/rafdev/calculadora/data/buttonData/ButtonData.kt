@@ -1,4 +1,4 @@
-package com.rafdev.calculadora.domain.buttonData
+package com.rafdev.calculadora.data.buttonData
 
 import com.rafdev.calculadora.domain.model.ButtonModel
 import com.rafdev.calculadora.ui.theme.CalculatorPalette
