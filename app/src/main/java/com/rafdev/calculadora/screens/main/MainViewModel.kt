@@ -10,6 +10,9 @@ import androidx.lifecycle.ViewModel
 import com.rafdev.calculadora.domain.model.ButtonModel
 import com.rafdev.calculadora.domain.usecase.GetDataButtonUseCase
 import com.rafdev.calculadora.util.CalculatorAction
+import com.rafdev.calculadora.util.CalculatorErrors.ARITHMETIC_ERROR
+import com.rafdev.calculadora.util.CalculatorErrors.SYNTAX_ERROR
+import com.rafdev.calculadora.util.CalculatorErrors.UNKNOWN_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -70,11 +73,11 @@ class MainViewModel @Inject constructor(private val getDataButtonUseCase: GetDat
                         _result.value = calculatedResult.toString()
                     }
                 } catch (e: IllegalArgumentException) {
-                    _result.value = "Error de sintaxis"
+                    _result.value = SYNTAX_ERROR
                 } catch (e: ArithmeticException) {
-                    _result.value = "Error aritmético"
+                    _result.value = ARITHMETIC_ERROR
                 } catch (e: Exception) {
-                    _result.value = "Error desconocido"
+                    _result.value = UNKNOWN_ERROR
                 }
             }
 

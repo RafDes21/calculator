@@ -30,12 +30,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rafdev.calculadora.R
-import com.rafdev.calculadora.components.ItemButton
-import com.rafdev.calculadora.domain.model.ButtonModel
+import com.rafdev.calculadora.screens.main.components.ButtonRow
 import com.rafdev.calculadora.ui.theme.CalculatorPalette
-import com.rafdev.calculadora.util.CalculatorAction.BACKSPACE
-import com.rafdev.calculadora.util.CalculatorAction.EQUALS
 
 @Composable
 fun MainScreen(
@@ -117,59 +113,6 @@ fun MainScreen(
     }
 }
 
-@Composable
-fun ButtonRow(
-    buttons: List<ButtonModel>,
-    onButtonClick: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        buttons.forEach { btn ->
-            when (btn.symbol) {
-                EQUALS -> {
-                    ItemButton(
-                        symbol = btn.symbol,
-                        symColor = btn.color,
-                        modifier = Modifier
-                            .background(CalculatorPalette.lightGolden)
-                            .height(82.dp)
-                            .weight(1f)
-                    ) {
-                        onButtonClick(btn.symbol)
-                    }
-                }
-
-                BACKSPACE -> {
-                    ItemButton(
-                        symbol = "",
-                        symColor = btn.color,
-                        onClick = { onButtonClick(btn.symbol) },
-                        modifier = Modifier
-                            .weight(1f)
-                            .size(82.dp),
-                        iconResourceId = R.drawable.ic_backspace
-                    )
-                }
-
-                else -> {
-                    ItemButton(
-                        symbol = btn.symbol,
-                        symColor = btn.color,
-                        modifier = Modifier
-                            .weight(1f)
-                            .size(82.dp)
-                    ) {
-                        onButtonClick(btn.symbol)
-                    }
-                }
-            }
-        }
-    }
-}
 
 @Preview(showSystemUi = true)
 @Composable
