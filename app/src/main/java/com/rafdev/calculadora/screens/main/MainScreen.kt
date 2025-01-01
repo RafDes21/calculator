@@ -19,9 +19,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -29,9 +26,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,7 +34,6 @@ import com.rafdev.calculadora.R
 import com.rafdev.calculadora.components.ItemButton
 import com.rafdev.calculadora.domain.model.ButtonModel
 import com.rafdev.calculadora.ui.theme.CalculatorPalette
-import com.rafdev.calculadora.util.CalculatorAction.ALL_CLEAR
 import com.rafdev.calculadora.util.CalculatorAction.BACKSPACE
 import com.rafdev.calculadora.util.CalculatorAction.EQUALS
 
@@ -50,8 +44,8 @@ fun MainScreen(
 ) {
 
     val rows = viewModel.uiButtonState.data
-    var expression by remember { mutableStateOf(TextFieldValue(" ")) }
-    var result by remember { mutableStateOf<String?>(null) }
+    val expression by viewModel.expression
+    val result by viewModel.result
 
     val keyboardController = LocalSoftwareKeyboardController.current
     keyboardController?.hide()
@@ -79,8 +73,8 @@ fun MainScreen(
             BasicTextField(
                 value = expression,
                 onValueChange = {
-                    expression = it
-                },
+                    val cursorPosition = it.selection.end
+                    viewModel.onExpressionChanged(it.text, cursorPosition)                },
                 modifier = Modifier
                     .wrapContentWidth()
                     .align(Alignment.End)
@@ -116,87 +110,7 @@ fun MainScreen(
 
             rows.forEach { row ->
                 ButtonRow(row, onButtonClick = { symbol ->
-                    val cursorPosition = expression.selection.end
-                    when (symbol) {
-                        ALL_CLEAR -> {
-                            result = null
-                            expression = TextFieldValue(" ", TextRange.Zero)
-                        }
-
-                        BACKSPACE -> {
-                            if (cursorPosition > 0) {
-                                val newText =
-                                    expression.text.removeRange(cursorPosition - 1, cursorPosition)
-                                expression = TextFieldValue(
-                                    newText,
-                                    TextRange(cursorPosition - 1)
-                                )
-                            }
-                        }
-
-                        EQUALS -> {
-                            try {
-                                val expressionString = expression.text.trim()
-                                if (expressionString.isNotEmpty()) {
-                                    val expr =
-                                        net.objecthunter.exp4j.ExpressionBuilder(expressionString)
-                                            .build()
-                                    val calculatedResult = expr.evaluate()
-                                    result = calculatedResult.toString()
-                                }
-                            } catch (e: IllegalArgumentException) {
-                                result = "Error de sintaxis"
-                            } catch (e: ArithmeticException) {
-                                result = "Error aritmético"
-                            } catch (e: Exception) {
-                                result = "Error desconocido"
-                            }
-                        }
-
-                        else -> {
-                            val textBeforeCursor =
-                                expression.text.substring(0, cursorPosition).trimEnd()
-                            val lastChar = textBeforeCursor.lastOrNull()
-
-                            val newText = buildString {
-                                append(expression.text.substring(0, cursorPosition))
-
-                                if (lastChar in listOf('+', '-', '*', '/', '%') && symbol in listOf(
-                                        "+",
-                                        "-",
-                                        "*",
-                                        "/",
-                                        "%"
-                                    )
-                                ) {
-                                    delete(length - 1, length)
-                                }
-
-                                append(symbol)
-                                append(expression.text.substring(cursorPosition))
-                            }
-
-                            val newCursorPosition =
-                                if (lastChar in listOf('+', '-', '*', '/', '%') && symbol in listOf(
-                                        "+",
-                                        "-",
-                                        "*",
-                                        "/",
-                                        "%"
-                                    )
-                                ) {
-                                    cursorPosition
-                                } else {
-                                    cursorPosition + symbol.length
-                                }
-
-                            expression = TextFieldValue(
-                                newText,
-                                TextRange(newCursorPosition)
-                            )
-
-                        }
-                    }
+                    viewModel.onButtonClicked(symbol)
                 })
             }
         }
