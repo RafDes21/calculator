@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "352688810740",
+    "project_id": "calculator-a96bb",
+    "storage_bucket": "calculator-a96bb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352688810740:android:df276b3509e52304e90ca1",
+        "android_client_info": {
+          "package_name": "com.rafdev.calculadora"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoqvkGoB5eAN_A6iVf-3GS_tZhOSWiomc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
