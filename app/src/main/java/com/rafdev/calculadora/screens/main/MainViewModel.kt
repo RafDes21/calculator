@@ -63,6 +63,7 @@ class MainViewModel @Inject constructor(private val getDataButtonUseCase: GetDat
             }
 
             CalculatorAction.EQUALS -> {
+//                throw RuntimeException("Test Crash")
                 try {
                     val expressionString = _expression.value.text.trim()
                     if (expressionString.isNotEmpty()) {
