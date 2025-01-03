@@ -16,7 +16,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -56,20 +56,19 @@ android {
 
 dependencies {
 
-    val nav_version = "2.8.4"
-
     //firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-crashlytics")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0-alpha01")
+    implementation(libs.dagger.hilt)
+    kapt(libs.kapt)
+    implementation(libs.androidx.navigation.hilt)
 
 
-    implementation ("net.objecthunter:exp4j:0.4.8")
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation (libs.exp4j)
+    implementation(libs.androidx.navigation.compose)
+    
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
