@@ -20,7 +20,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val getDataButtonUseCase: GetDataButtonUseCase) :
     ViewModel() {
 
-    private val _expression = mutableStateOf(TextFieldValue(" "))
+    private val _expression = mutableStateOf(TextFieldValue(""))
     val expression: State<TextFieldValue> = _expression
 
     private val _result = mutableStateOf<String?>(null)
@@ -48,7 +48,7 @@ class MainViewModel @Inject constructor(private val getDataButtonUseCase: GetDat
         when (symbol) {
             CalculatorAction.ALL_CLEAR -> {
                 _result.value = null
-                _expression.value = TextFieldValue(" ", TextRange.Zero)
+                _expression.value = TextFieldValue("", TextRange.Zero)
             }
 
             CalculatorAction.BACKSPACE -> {
