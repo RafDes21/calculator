@@ -62,13 +62,12 @@ dependencies {
     implementation(libs.firebase.crashlytics)
 
     implementation(libs.dagger.hilt)
+    implementation(libs.androidx.navigation.compose)
     kapt(libs.kapt)
     implementation(libs.androidx.navigation.hilt)
 
 
     implementation (libs.exp4j)
-    implementation(libs.androidx.navigation.compose)
-    
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

@@ -34,4 +34,6 @@ fun Navigation(modifier: Modifier) {
 sealed class ScreenRoot(val route: String) {
     object SplashScreen : ScreenRoot("splash")
     object MainScreen : ScreenRoot("main")
+    object CalculatorScreen : ScreenRoot("calculator_screen")
+    object HistoryScreen : ScreenRoot("history_screen")
 }
